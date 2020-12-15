@@ -2,7 +2,7 @@
 ### 主题
 纯Python，无框架，手搭Lenet5卷积神经网络
 ### 概述
-只通过Python和numpy库，从数学推Lenet5中的全连接层，卷积层，激活函数，优化函数。搭建Lenet5卷积神经网络，在手写字符识别上应用
+只通过Python和numpy库，从数学推Lenet5中的全连接层，卷积层，激活函数，优化函数。搭建Lenet5卷积神经网络，在手写字符识别上应用  
 视频地址: https://www.bilibili.com/video/BV1Dy4y1m7Y9
 ### 参考资料
 斋藤康毅 陆宇杰 《深度学习入门 基于Python的理论与实现》  
