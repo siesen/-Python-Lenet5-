@@ -177,7 +177,8 @@ class Convolution:
         out = np.dot(col, col_W) + self.b
         out = out.reshape(N, out_h, out_w, -1).transpose(0, 3, 1, 2)
 
-        self.x = x
+#        self.x = x
+        self.xshape=x.shape
         self.col = col
         self.col_W = col_W
 
@@ -192,7 +193,8 @@ class Convolution:
         self.dW = self.dW.transpose(1, 0).reshape(FN, C, FH, FW)
 
         dcol = np.dot(dout, self.col_W.T)
-        dx = col2im(dcol, self.x.shape, FH, FW, self.stride, self.pad)
+#        dx = col2im(dcol, self.x.shape, FH, FW, self.stride, self.pad)
+        dx = col2im(dcol, self.xshape, FH, FW, self.stride, self.pad)
 
         return dx
   
@@ -218,11 +220,12 @@ class MaxPooling:
         out = np.max(col, axis=1)
         out = out.reshape(N, out_h, out_w, C).transpose(0, 3, 1, 2)
 
-        self.x = x
+#        self.x = x
+        self.xshape=x.shape
         self.arg_max = arg_max
 
         return out
-
+ 
     def backward(self, dout):
         dout = dout.transpose(0, 2, 3, 1)
         
@@ -232,9 +235,11 @@ class MaxPooling:
         dmax = dmax.reshape(dout.shape + (pool_size,)) 
         
         dcol = dmax.reshape(dmax.shape[0] * dmax.shape[1] * dmax.shape[2], -1)
-        dx = col2im(dcol, self.x.shape, self.pool_h, self.pool_w, self.stride, self.pad)
+#        dx = col2im(dcol, self.x.shape, self.pool_h, self.pool_w, self.stride, self.pad)
+        dx = col2im(dcol, self.xshape, self.pool_h, self.pool_w, self.stride, self.pad)
         
         return dx
+
   
 #optimizer----------------------------------------------------
 class SGD:
