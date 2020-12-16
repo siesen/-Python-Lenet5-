@@ -22,16 +22,17 @@ temp[np.arange(y_test.size),y_test]=1
 y_test=temp
 
       
-max_epochs = 20
+max_epochs = 10
 
 network = Lenet5(input_dim=(1,28,28), 
                  conv_param={'filter_num1':6, 'filter_size1':3,'filter_num2':16, 'filter_size2':3, 'pad':1, 'stride':1},
                  hidden_size1=120,hidden_size2=84, output_size=10, weight_init_std=0.01)
 
-                        
+#经过测试，sgd，momentum无法收敛，adaGrad训练到后期乏力，只有80%准确率。rmsprop和Adam很优秀，特别是adam，收敛速度快，准确率高。
+#实验结果符合之前的理论支持
 trainer = Trainer(network, x_train, y_train, x_test, y_test,
                   epochs=max_epochs, mini_batch_size=100,
-                  optimizer='adam', optimizer_param={'lr': 0.001},
+                  optimizer='rmsprop', optimizer_param={'lr': 0.001},
                   evaluate_sample_num_per_epoch=1000)
 trainer.train()
 
